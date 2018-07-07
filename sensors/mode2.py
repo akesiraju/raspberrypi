@@ -1,0 +1,1 @@
+mode2 -d /dev/lirc0 
