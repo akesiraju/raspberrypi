@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<title></title>{{ title }}</title>
+<head>
+    <style>
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            width: 150px;
+            color: white;
+            height: 100px;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+        function signal(v) {
+            $.getJSON('http://localhost:5002/'+v, function(data) {
+                document.get$('div#default h3').html(data['status']);});
+        }
+        </script>
+<body>
+    <div id='default'>
+    <h3>Status</h3>
+</div>
+    <table>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <button class="button" onclick="signal(259)">Drive</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button class="button" onclick="signal(260)">Left</button>
+            </td>
+            <td>
+                <button class="button" onclick="signal(32)">Brake</button>
+            </td>
+            <td>
+                <button class="button" onclick="signal(261)">Right</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <button class="button" onclick="signal(258)">Reverse</button>
+            </td>
+            <td>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>
