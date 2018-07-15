@@ -196,6 +196,8 @@ def move(signal):
 
     if signal == 27:
         clear()
+    
+    return signal
 
 
 def manual(stdscr):
@@ -272,7 +274,7 @@ def square():
 
     clear()
 
-if __name__ == "__main__":
-    wrapper(manual)
+# if __name__ == "__main__":
+    #wrapper(manual)
     #auto()
     #square()

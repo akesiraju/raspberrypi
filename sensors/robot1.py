@@ -37,7 +37,7 @@ while True:
     if GPIO.input(pir):
         print('movement')
         #GPIO.output(light, GPIO.HIGH)
-	lcd.lcd_display_string('Hello there',1)
+	    lcd.lcd_display_string('Hello there',1)
         #for i in range(1,2):
         GPIO.output(light, GPIO.HIGH)
          #   time.sleep(0.1)
