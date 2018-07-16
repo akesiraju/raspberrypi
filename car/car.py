@@ -4,12 +4,11 @@
 import RPi.GPIO as GPIO
 import time
 #import keyboard
-import sys, tty
+import sys
 
 
 class Car():
     def __init__(self):
-        tty.setraw(sys.stdin.fileno())
 
         self.turntime = 0.2
         self.drivetime = 0.75
@@ -184,3 +183,4 @@ class Car():
             self.clear()
         
         return signal
+
