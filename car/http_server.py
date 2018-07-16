@@ -18,6 +18,11 @@ def control():
     my_car = Car()
     return render_template('index.html', title='Car Control')
 
+@app.route("/beta/")
+def control():
+    my_car = Car()
+    return render_template('beta.html', title='Car Control')
+
 
 if __name__ == '__main__':
     app.run(host='192.168.2.18',port=5002)
