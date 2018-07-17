@@ -19,7 +19,7 @@ def control():
     return render_template('index.html', title='Car Control')
 
 @app.route("/beta")
-def control():
+def control_beta():
     my_car = Car()
     return render_template('beta.html', title='Car Control')
 
