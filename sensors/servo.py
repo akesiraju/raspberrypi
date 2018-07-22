@@ -1,30 +1,21 @@
 import RPi.GPIO as GPIO
 import time
 
-pin = 18
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(pin, GPIO.OUT)
-pwm = GPIO.PWM(pin, 50)
-pwm.start(0)
 
-time.sleep(5)
+GPIO.setup(18, GPIO.OUT)
 
-def TurnLeft():
-    SetAngle(70)
-    time.sleep(2.0)
-    SetAngle(90)
+p = GPIO.PWM(18, 50)
 
-def SetAngle(angle):
-    duty = angle / 18 + 2
-    GPIO.output(pin, True)
-    pwm.ChangeDutyCycle(duty)
-    time.sleep(1.0)
-    GPIO.output(pin, False)
+p.start(3.5)
 
-if __name__ == '__main__':
-    #for x in [90, 135,180,135,90,45,0, 45, 80]:
-    for x in [100,80,100,120,100]:
-        SetAngle(x)
-
-    pwm.stop()
+try:   
+    p.ChangeDutyCycle(2.5)  # turn towards 90 degree
+    time.sleep(1) # sleep 1 second
+    p.ChangeDutyCycle(4.5)  # turn towards 0 degree
+    time.sleep(1) # sleep 1 second
+    p.ChangeDutyCycle(3.5) # turn towards 180 degree
+    time.sleep(1) # sleep 1 second 
+except KeyboardInterrupt:
+    p.stop()
     GPIO.cleanup()
