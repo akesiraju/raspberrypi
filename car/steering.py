@@ -22,11 +22,11 @@ class Steering():
 
     def turn_left(self):
         self.logger.debug('turning left')
-        self._set_duty_cycle(4.5)
+        self._set_duty_cycle(4.75)
 
     def turn_right(self):        
         self.logger.debug('turning right')
-        self._set_duty_cycle(2.5)
+        self._set_duty_cycle(2.25)
 
     def turn_center(self):        
         self.logger.debug('turning center')

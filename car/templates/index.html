@@ -38,7 +38,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
         function signal(v) {
-            $.getJSON('http://192.168.2.18:5002/'+v, function(data) {
+            $.getJSON('http://{{ ip }}:5002/'+v, function(data) {
                 h3 = document.getElementById('h3')
                 h3.innerText = data['status'];
                 });

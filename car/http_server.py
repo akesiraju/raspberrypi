@@ -1,3 +1,4 @@
+import socket
 from flask import Flask, request, render_template
 from flask import jsonify
 #from flask_cors import CORS, cross_origin
@@ -13,10 +14,19 @@ def move(direction_id):
     signal = my_car[0].move(direction_id)
     return jsonify({'status':direction_id})
 
-@app.route("/beta")
+@app.route("/")
 def control():
     my_car[0] = car.Car()
-    return render_template('index.html', title='Car Control')
+    return render_template('index.html', title='Car Control', ip=_get_ip())
+
+
+def _get_ip():
+	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	s.connect(("8.8.8.8", 80))
+	ip = s.getsockname()[0]
+	s.close()
+	return ip
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=5002)

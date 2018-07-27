@@ -25,7 +25,7 @@
     margin = 50;
 
     function signal(v) {
-        $.getJSON('http://192.168.2.18:5002/' + v, function (data) {
+        $.getJSON('http://192.168.43.231:5002/' + v, function (data) {
             h3 = document.getElementById('h3')
             h3.innerText = data['status'];
         });
