@@ -21,25 +21,25 @@
     }
 
     function onMouseMove(e, isReverse) {
-        if (mDown == true) {
+        // if (mDown == true) {
 
-            var x = e.clientX;
-            var y = e.clientY;
+        var x = e.clientX;
+        var y = e.clientY;
 
-            //move right
-            if (x > mouseX + margin) {
-                console.log('right');
-                signal(261);
-                mouseX = x;
-            }
-
-            //move left
-            else if (x < mouseX - margin) {
-                console.log('left');
-                signal(260);
-                mouseX = x;
-            }
+        //move right
+        if (x > mouseX + margin) {
+            console.log('right');
+            signal(261);
+            mouseX = x;
         }
+
+        //move left
+        else if (x < mouseX - margin) {
+            console.log('left');
+            signal(260);
+            mouseX = x;
+        }
+        //    }
     }
 
     function onMouseUp() {
