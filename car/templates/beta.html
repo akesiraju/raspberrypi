@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title></title>{{ title }}</title>
 
+<title>Car Control</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="beta.js"></script>
+<html>
 <head>
     <style>
         html,
@@ -10,84 +13,28 @@
             height: 100%;
         }
 
-        .div {
-            height: 100%;
-            background-color: aqua;
+        .divUp {
+            height: 128px;
+            width: auto;
+            background-color: green;
+            z-index: 1;
+        }
+
+        .divDown {
+            height: 128px;
+            width: auto;
+            background-color: red;
+            z-index: 2;
         }
     </style>
 </head>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript">
-
-    var mouseDown = false;
-    mouseX = -1;
-    mouseY = -1;
-    margin = 50;
-
-    function signal(v) {
-        $.getJSON('http://192.168.43.231:5002/' + v, function (data) {
-            h3 = document.getElementById('h3')
-            h3.innerText = data['status'];
-        });
-    }
-
-    function onMouseMove(e) {
-        if (mouseDown == true) {
-            var x = e.clientX;
-            var y = e.clientY;
-
-            // console.log('moving to ' + x + ', ' + y + ' from ' + mouseX + ', ' + mouseY);
-    
-
-            //move right
-            if (x > (mouseX + margin)) {
-                signal(261)
-            }
-
-            //move left
-            if (x < (mouseX + margin)) {
-                signal(260)
-            }
-
-            //move forward
-            if (y > (mouseY + margin)) {
-                signal(259)
-            }
-
-            //move reverse
-            if (y < (mouseY + margin)) {
-                signal(258)
-            }
-
-            mouseX = x;
-            mouseY = y;
-        }
-    }
-
-    function onMouseUp() {
-        mouseDown = false;
-        // console.log('mouseDOwn ' + mouseDown);
-    
-        // break
-        signal(32)
-    }
-
-    function onMouseDown(e) {
-        mouseX = e.clientX
-        mouseY = e.clientY
-
-        mouseDown = true;
-
-        // console.log('mouseDOwn ' + mouseDown+ ' at ' + mouseX+ ' - ' + mouseY);
-    }
-</script>
-
 <body>
     <h3 id='h3'>Status</h3>
     <h3 id='exit' onclick="signal(27)">Exit</h3>
-    <div class="div" onmousedown="onMouseDown(event)" onmouseup="onMouseUp()" onmousemove="onMouseMove(event)">
 
-    </div>
+    <div id='divUp' class="divUp" onmousedown="onMouseDown(event, false)" onmouseup="onMouseUp()" onmousemove="onMouseMove(event, false)"></div>
+    <br>
+    <div id='divDown' class="divDown" onmousedown="onMouseDown(event, true)" onmouseup="onMouseUp()" onmousemove="onMouseMove(event, true)"></div>
+
 </body>
-
 </html>
