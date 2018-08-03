@@ -1,107 +1,67 @@
 <!DOCTYPE html>
 
+<html>
 <title>Car Control</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript">
-
-    var mDown = false;
-    var mouseX = -1;
-    var mouseY = -1;
-    var margin = 10;
-    var height = 512;
-    var width = 512;
-
-    function signal(v) {
-        $.getJSON('http://{{ ip }}:5002/' + v, function (data) {
-            h3 = document.getElementById('h3')
-            h3.innerText = data['status'];
-        });
-    }
-
-    function onMouseMove(e, isReverse) {
-        // if (mDown == true) {
-
-        var x = e.clientX;
-        var y = e.clientY;
-
-        //move right
-        if (x > mouseX + margin) {
-            console.log('right');
-            signal(261);
-            mouseX = x;
-        }
-
-        //move left
-        else if (x < mouseX - margin) {
-            console.log('left');
-            signal(260);
-            mouseX = x;
-        }
-        //    }
-    }
-
-    function onMouseUp() {
-        mDown = false;
-        console.log('brakes');
-        // break
-        signal(32);
-    }
-
-
-
-    function onMouseDown(e, isReverse) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-
-        mDown = true;
-
-        if (isReverse) {
-            console.log('reverse');
-            signal(258);
-        }
-        else {
-            console.log('forward');
-            signal(259);
-        }
-
-        // console.log('mouseDOwn ' + mouseDown+ ' at ' + mouseX+ ' - ' + mouseY);
-    }
-</script>
-<html>
-
 <head>
-    <style>
-        html,
-        body {
-            height: 100%;
-        }
-
-        .divUp {
-            height: 128px;
-            width: auto;
-            background-color: green;
-            z-index: 1;
-        }
-
-        .divDown {
-            height: 128px;
-            width: auto;
-            background-color: red;
-            z-index: 2;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
 <body>
     <h3 id='h3'>Status</h3>
-    <h3 id='exit' onclick="signal(27)">Exit</h3>
+    <input id="slider" type="range" min="25" max="45" value="35">
+    <input id="reverse" type="checkbox">Reverse</input>
 
-    <div id='divUp' class="divUp" onmousedown="onMouseDown(event, false)" onmouseup="onMouseUp()" onmousemove="onMouseMove(event, false)"></div>
-    <br>
-    <div id='divDown' class="divDown" onmousedown="onMouseDown(event, true)" onmouseup="onMouseUp()" onmousemove="onMouseMove(event, true)"></div>
-
+    <tr>
+        <td>
+            <h3 id='exit' onclick="signal('engine/off')">Exit</h3>
+        </td>
+        <td>
+            <h3 id='brakes' onclick="signal('brakes/apply')">Brakes</h3>
+        </td>
+    </tr>
 </body>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    var slider = document.getElementById("slider");
+    var reverse = document.getElementById("reverse");
+
+
+    console.log(slider);
+
+    slider.oninput = function () {
+        signal('turn/' + this.value);
+    }
+
+    slider.onmousedown = function () {
+        drive();
+    }
+
+    function drive() {
+
+        if (reverse.checked) {
+            signal('drive/reverse');
+        }
+        else {
+            signal('drive/forward');
+        }
+    }
+
+    slider.ontouchstart = function () {
+        drive();
+    }
+
+    function signal(command) {
+        // $.getJSON('http://{{ ip }}:5002/' + command, function (data) {
+        //     h3 = document.getElementById('h3')
+        //     h3.innerText = data['status'];
+        // });
+
+        console.log(command)
+    }
+</script>
+
 
 </html>
