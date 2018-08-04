@@ -32,6 +32,10 @@ class Steering():
         self.logger.debug('turning center')
         self._set_duty_cycle(3.5)
 
+    def turn(self, angle):
+        self.logger.debug('turning')
+        self._set_duty_cycle(angle)
+
     def _clear(self):        
         self.logger.debug('clearing')
         self.p.stop()
