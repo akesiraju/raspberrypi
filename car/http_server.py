@@ -22,29 +22,29 @@ def control():
     return render_template('index.html', title='Car Control', ip=_get_ip())
 
 @app.route("/drive/forward")
-def drive(angle):
+def drive_forward():
     signal = my_car[0].forward()
     return jsonify({'status': signal})
 
 
 @app.route("/turn/<float:angle>")
-def drive(angle):
+def turn(angle):
     signal = my_car[0].turn(angle)
     return jsonify({'status': signal})
 
 
 @app.route("/drive/reverse")
-def drive(angle):
-    signal = my_car[0].reverse(angle)
+def drive_reverse():
+    signal = my_car[0].reverse()
     return jsonify({'status': signal})
 
 @app.route("/brakes/apply")
-def drive():
+def brakes():
     signal = my_car[0].apply_brakes()
     return jsonify({'status': signal})
 
 @app.route("/engine/off")
-def drive():
+def engine():
     signal = my_car[0].clear()
     return jsonify({'status': signal})
 

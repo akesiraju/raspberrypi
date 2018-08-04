@@ -9,7 +9,8 @@
 
 <body>
     <h3 id='h3'>Status</h3>
-    <input id="slider" type="range" min="25" max="45" value="35">
+    <!-- <input id="slider" type="range" min="225" max="475" value="350"> -->
+    <input id="slider" type="range" min="1" max="3" value="2">
     <input id="reverse" type="checkbox">Reverse</input>
 
     <tr>
@@ -32,12 +33,29 @@
     console.log(slider);
 
     slider.oninput = function () {
-        signal('turn/' + this.value);
+        switch (this.value){
+            case 1:
+            {
+                signal('turn/2.25');
+                break;
+            }
+            case 2:
+            {
+                signal('turn/3.5');
+                break;
+            }
+            case 3:
+            {
+                signal('turn/4.75');
+                break;
+            }
+        }
+        
     }
 
-    slider.onmousedown = function () {
-        drive();
-    }
+    // slider.onmousedown = function () {
+    //     drive();
+    // }
 
     function drive() {
 
@@ -51,6 +69,10 @@
 
     slider.ontouchstart = function () {
         drive();
+    }
+
+    slider.onchange = function(){
+        signal('brakes/apply');
     }
 
     function signal(command) {

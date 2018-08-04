@@ -40,6 +40,10 @@ class Steering():
         self.logger.debug('clearing')
         self.p.stop()
 
+    def stop(self):        
+        self.logger.debug('clearing')
+        self._clear()
+
     def _set_duty_cycle(self, duty, time_secs = 0.1):
         self.logger.debug('setting duty cycle to duty %s for time %s' % (duty, time_secs))
         self.p.ChangeDutyCycle(duty)

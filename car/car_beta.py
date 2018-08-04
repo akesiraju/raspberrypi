@@ -10,7 +10,7 @@ class Car():
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         GPIO.setmode(GPIO.BCM)
-
+        self.steer = Steering()
         self.brakes = False
         self.has_turned = False
 
@@ -29,12 +29,12 @@ class Car():
 
     def apply_brakes(self):
         self.brakes = True
+        GPIO.output(self.enable1, GPIO.LOW)
 
         return 'Applying Brakes'
 
     def turn(self, angle):
-        with Steering() as steer:
-            steer.turn(angle)
+        self.steer.turn(angle)
 
         return 'Turned ' + str(angle)
 
@@ -71,6 +71,7 @@ class Car():
         return 'Driving Forward'
 
     def clear(self):
+        self.steer.stop()
         GPIO.output(self.input1, GPIO.LOW)
         GPIO.output(self.enable1, GPIO.LOW)
         GPIO.cleanup()
