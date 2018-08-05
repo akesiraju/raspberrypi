@@ -34,7 +34,7 @@
 
     slider.oninput = function () {
         switch (this.value){
-            case 1:
+            if(this.value==1):
             {
                 signal('turn/2.25');
                 break;
