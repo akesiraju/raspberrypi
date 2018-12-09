@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>{{ title }}</title>
+
+<head>
+    <style>
+        html,
+        .body{
+            height:98%;
+            width:auto;
+        }
+    .canvas{
+        background-color: black;
+        width:100%;
+        height:100%;
+        }
+    .button {
+      background-color: transparent;
+      border: 1px;
+      border-color: black;
+      width: 100px;
+      height: 25px;
+      text-align: center;
+      vertical-align: center;
+      text-decoration-color: red;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function signal(v) {
+        console.log('turning: ' + v);
+        $.getJSON('http://{{ ip }}:5002/' + v, function (data) {
+            h3 = document.getElementById('h3')
+            h3.innerText = data['status'];
+        });
+    }
+
+    function init() {
+        canvas = document.getElementById('canvas');
+        canvas.addEventListener('mousedown', onmousedown, false);
+
+        canvas.addEventListener('mousemove', onmousemove, false);
+
+        canvas.addEventListener('mouseup', onmouseup, false);
+    }
+
+    var mouseDown = false;
+    var sensitivityX = 100;
+    var sensitivityY = 100;
+    var signalX = -1;
+    var signalY = -1;
+
+
+    function onmousedown(e) {
+        console.log('mouse down: ' + e.clientX + ' ' + e.clientY);
+        mouseDown = true;
+        signalX = e.clientX;
+        signalY = e.clientY;
+    }
+
+    function onmouseup(e) {
+        console.log('mouse up: ' + e.clientX + ' ' + e.clientY);
+        signal(32);
+        mouseDown = false;
+        signalX = -1;
+        signalY = -1;
+    }
+
+    function onmousemove(e) {
+        console.log('mouse move: ' + e.clientX + ' ' + e.clientY);
+        if (mouseDown) {
+            if (e.clientX <= signalX - sensitivityX) {
+                signalX = e.clientX;
+                signal(260);
+                //turn left
+            }
+            else if (e.clientX >= signalX + sensitivityX) {
+                //turn right
+                signalX = e.clientX;
+                signal(261);
+            }
+            else if (e.clientY <= signalY - sensitivityY) {
+                //forward 
+                signalY = e.clientY;
+                signal(258);
+            }
+            else if (e.clientY >= signalY + sensitivityY) {
+                //reverse 
+                signalY = e.clientY;
+                signal(259);
+            }
+        }
+    }
+</script>
+
+<body onload='init()' class="body">
+    <button class="button" onclick="signal(27)">Exit</button>
+    <canvas class="canvas" id='canvas'></canvas>
+</body>
+
+</html>

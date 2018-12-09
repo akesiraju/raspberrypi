@@ -38,7 +38,7 @@ def move(signal):
 @app.route("/")
 def control():
     my_car[0] = car.Car()
-    return render_template('index.html', title='Car Control', ip=_get_ip())
+    return render_template('charlie.html', title='Car Control', ip=_get_ip())
 
 
 def _get_ip():
