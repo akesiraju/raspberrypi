@@ -9,3 +9,7 @@ def lift_up():
 
 def lift_down():
     hand.lift_down(control_pins)
+
+
+def wiggle():
+    hand.wiggle(control_pins)

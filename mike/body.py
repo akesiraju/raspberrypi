@@ -4,13 +4,17 @@ import time
 
 def shake_right_hand():
     right_hand.lift_up()
-    time.sleep(2)
+    time.sleep(1)
+    right_hand.wiggle()
+    time.sleep(0.5)
     right_hand.lift_down()
 
 
 def shake_left_hand():
     left_hand.lift_up()
-    time.sleep(2)
+    time.sleep(1)
+    left_hand.wiggle()
+    time.sleep(0.5)
     left_hand.lift_down()
 
 
