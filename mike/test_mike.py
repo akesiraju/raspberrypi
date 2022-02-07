@@ -7,4 +7,9 @@ if __name__ == "__main__":
     # head.turn_left()
     # head.turn_right()
 
+    # body.stop_walk()
+    # body.turn_left()
+    # time.sleep(1)
+    # body.stop_walk()
+
     body.shake_left_hand()
