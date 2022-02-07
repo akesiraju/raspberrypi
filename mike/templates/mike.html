@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>{{ title }}</title>
+
+<head>
+    <style>
+        html,
+        .body{
+            height:98%;
+            width:auto;
+        }
+    .canvas{
+        background-color: black;
+        width:100%;
+        height:100%;
+        }
+    .button {
+      background-color: transparent;
+      border: 1px;
+      border-color: black;
+      width: 100px;
+      height: 25px;
+      text-align: center;
+      vertical-align: center;
+      text-decoration-color: red;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function log(msg) {
+        var sts = document.getElementById('status');
+        sts.innerText = msg;
+    }
+
+    function signal(v) {
+        console.log('turning: ' + v);
+        $.getJSON('http://{{ ip }}:5002/' + v, function (data) {
+            h3 = document.getElementById('h3')
+            h3.innerText = data['status'];
+        });
+    }
+
+    function init() {
+        canvas = document.getElementById('canvas');
+        //canvas.addEventListener('mousedown', onmousedown, false);
+        //canvas.addEventListener('mousemove', onmousemove, false);
+        //canvas.addEventListener('mouseup', onmouseup, false);
+        canvas.addEventListener('touchstart', ontouchstart, false);
+        canvas.addEventListener('touchmove', ontouchmove, false);
+        canvas.addEventListener('touchend', ontouchend, false);
+    }
+
+    var mouseDown = false;
+    var sensitivityX = 50;
+    var sensitivityY = 50;
+    var signalX = -1;
+    var signalY = -1;
+
+    function down(x, y) {
+        console.log('mouse down: ' + x + ' ' + y);
+        mouseDown = true;
+        signalX = x;
+        signalY = y;
+        signal(258);
+    }
+
+    function up() {
+        signal(32);
+        mouseDown = false;
+        signalX = -1;
+        signalY = -1;
+    }
+
+    function move(x, y) {
+        console.log('mouse move: ' + x + ' ' + y);
+        if (mouseDown) {
+            if (x <= signalX - sensitivityX) {
+                signalX = x;
+                signal(260);
+                //turn left
+            }
+            else if (x >= signalX + sensitivityX) {
+                //turn right
+                signalX = x;
+                signal(261);
+            }
+            else if (y <= signalY - sensitivityY) {
+                //forward 
+                signalY = y;
+                signal(258);
+            }
+            else if (y >= signalY + sensitivityY) {
+                //reverse 
+                signalY = y;
+                signal(259);
+            }
+        }
+    }
+
+    function ontouchstart(e) {
+
+        var touches = e.changedTouches;
+        if (touches.length > 0) {
+
+            log('down: ' + touches[0].pageX + ' ' + touches[0].pageY);
+            down(touches[0].pageX, touches[0].pageY);
+        }
+    }
+
+    function ontouchend(e) {
+        log('up');
+        up();
+    }
+
+    function ontouchmove(e) {
+        var touches = e.changedTouches;
+        if (touches.length > 0) {
+
+            log('move: ' + touches[0].pageX + ' ' + touches[0].pageY);
+            move(touches[0].pageX, touches[0].pageY);
+        }
+    }
+
+
+    function onmousedown(e) {
+        down(e.clientX, e.clientY);
+    }
+
+    function onmouseup(e) {
+        up(e.clientX, e.clientY);
+    }
+
+    function onmousemove(e) {
+        move(e.clientX, e.clientY);
+    }
+</script>
+
+<body onload='init()' class="body">
+    <button class="button" onclick="signal(27)">Exit</button>
+    <label id='status'></label>
+    <canvas class="canvas" id='canvas'></canvas>
+</body>
+
+</html>
