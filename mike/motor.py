@@ -22,12 +22,17 @@ def run(enable_pin, high_pin, low_pin):
     GPIO.output(low_pin, GPIO.LOW)
 
 
-def stop(enable_pin):
+def stop(enable_pin, high_pin, low_pin):
     print("stop")
 
     GPIO.setmode(GPIO.BOARD)
 
     GPIO.setup(enable_pin, GPIO.OUT)
+    GPIO.setup(high_pin, GPIO.OUT)
+    GPIO.setup(low_pin, GPIO.OUT)
+
     GPIO.output(enable_pin, GPIO.LOW)
+    GPIO.output(high_pin, GPIO.LOW)
+    GPIO.output(low_pin, GPIO.LOW)
 
     GPIO.cleanup()

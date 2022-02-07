@@ -14,4 +14,4 @@ def reverse():
 
 
 def stop():
-    motor.stop(enable_pin)
+    motor.stop(enable_pin, forward_pin, reverse_pin)
