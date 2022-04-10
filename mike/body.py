@@ -18,6 +18,22 @@ def shake_left_hand():
     left_hand.lift_down()
 
 
+def rotate_left_hand_clockwise():
+    left_hand.lift_down()
+
+
+def rotate_left_hand_counter_clockwise():
+    left_hand.lift_up()
+
+
+def rotate_right_hand_clockwise():
+    right_hand.lift_down()
+
+
+def rotate_right_hand_counter_clockwise():
+    right_hand.lift_up()
+
+
 def turn_left():
     left_leg.stop()
     right_leg.walk()
